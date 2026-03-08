@@ -233,7 +233,7 @@ verify:
 
 output:
 
-1.     mysql
-2.     Secure
+1. mysql
+2. Secure
 
  

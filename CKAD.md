@@ -117,22 +117,14 @@ k apply -f my-service.yaml
 **Create ConfigMap**
 
 ```
-k create configmap app-config --from-literal=DB_HOST=mysql
+   k create configmap app-config --from-literal=DB_HOST=mysql
+#Verify
+   k get configmap app-config
+#Create Secret
+   k create secret generic app-secret --from-literal=DB_PASSWORD=Secure
+#Verify
+   k get secret app-secret
 ```
-
-Verify
-
-`k get configmap app-config`
-
-Create Secret
-
-```
-k create secret generic app-secret --from-literal=DB_PASSWORD=Secure
-```
-
-Verify
-
-`k get secret app-secret`
 
 **Create Pod configered-app.yaml using dry-run:**
 
@@ -169,11 +161,11 @@ kubectl apply -f pod.yaml
 
 #### Declarative
 
-`vim app-config.yaml`
-
-`vim app-secret.yaml`
-
-`vim configured-app.yaml`
+```
+vim app-config.yaml
+vim app-secret.yaml
+vim configured-app.yaml
+```
 
 ```
 apiVersion: v1
@@ -225,11 +217,11 @@ k apply -f configured-app.yaml
 
 verify:
 
-`k exec -it configured-app -- /bin/bash`
-
-`cat /etc/config/DB_HOST` 
-
-`cat /etc/secret/DB_PASSWORD`
+```
+k exec -it configured-app -- /bin/bash
+cat /etc/config/DB_HOST 
+cat /etc/secret/DB_PASSWORD
+```
 
 output:
 

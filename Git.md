@@ -123,10 +123,8 @@ incoming code from origin/master
 ```
 #push NEW changes
      git push origin master
-```
-
-```
-git push -f origin master
+#or
+     git push -f origin master
 ```
 
 ---

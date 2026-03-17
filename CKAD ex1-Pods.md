@@ -1,81 +1,108 @@
-# CKAD
+# CKAD ex1-Pods
 
-### SECTION 1
+> **for declarative:**
+>
+>     i : to insert  
+>     :wq! : to save and exit 
 
-1. Deploy a Pod : **IMPERATIVE**
+---
 
-- create a Pod named my-pod in the test-namespace namespace.
-- The Pod should use the nginx:latest image and run on port 80. 
-- Expose this Pod using a ClusterIP service named my-service.
+### create pod my-pod with
 
-```
-kubectl run my-pod \
-  --image=nginx:latest \
-  --port=80 \
-  --restart=Never \
-  -n test-namespace
-```
+- nginx image, 
+- port 80,
+- no restart, 
+- sleeps in 1 hour,
+- test-namespace namespace,
+- generate yaml to pod.yaml
+- Environment Variables
 
-verify:
+---
+
+#### ***IMPERATIVE***
 
 ```bash
-kubectl get pods -n test-namespace
+# need to create namespace of the pod
+k create namespace test-namespace
 ```
 
-Expose the Pod with a ClusterIP Service
-
-```
-kubectl expose pod my-pod \
-  --name=my-service \
+```bash
+# create pod my-pod
+k run my-pod \
+  --image=nginx:latest \
+  --labels="pod1" \
   --port=80 \
-  --target-port=80 \
-  --type=ClusterIP \
+  --restart=Never \
+  -- /bin/sh -c "sleep 3600" \
+  -n test-namespace \
+  --dry-run=client -o yaml > pod.yaml \
+  --env="MODE=production" \
+```
+
+```bash
+# create and expose service with a ClusterIP of my-pod
+k expose pod my-pod 
+  --name=my-service 
+  --port=80 
+  --target-port=80 
+  --type=ClusterIP 
   -n test-namespace
 ```
 
-verify:
+#### ***DECLARATIVE:***
 
 ```
-kubectl get svc -n test-namespace
+# need to create namespace of the pod
+apiVersion: v1
+kind: Namespace
+metadata:
+ name: test-namespace
 ```
 
-**CHECK EVERYTHING:**
-
-```
-kubectl get pods -n test-namespace
-kubectl get svc -n test-namespace
-kubectl describe svc my-service -n test-namespace
+```bash
+# apply it
+k apply -f namespace.yaml
 ```
 
 ---
 
-**DECLARATIVE:**
-
-- **my-pod:**
-
-`vim my-pod.yaml`
-
 ```
-apiVersion: v1 
-kind: Pod 
-metadata: 
+# create pod my-pod
+vim my-pod.yaml
+-----------------------
+apiVersion: v1
+kind: Pod
+metadata:
   name: my-pod
-  namespace: test-namespace   
-  labels:     
-    app: nginx 
-spec:   
+  namespace: test-namespace
+  labels:
+    app: pod1
+spec:
+  restartPolicy: Never
+  
   containers:
-  - name: nginx
-    image: nginx:latest
-    ports:
-    - containerPort: 80
+    - name: my-pod
+      image: nginx:latest
+      command: ["sleep", "3600"]
+      ports:
+        - containerPort: 80
+      env:
+        - name: MODE
+          value: "production"
 ```
 
-- **my-service:**
-
-`vim my-service.yaml`
-
 ```
+# apply it
+k apply -f my-pod.yaml
+```
+
+---
+
+```yaml
+# Expose the Pod with a ClusterIP Service (create service)
+vim my-service.yaml
+--------------------------
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -91,11 +118,18 @@ spec:
   type: ClusterIP
 ```
 
-apply
-
-```
-k apply -f my-pod.yaml
+```bash
+#apply
 k apply -f my-service.yaml
+```
+
+---
+
+```bash
+#CHECK EVERYTHING:
+kubectl get pods -n test-namespace
+kubectl get svc -n test-namespace
+kubectl describe svc my-service -n test-namespaceS
 ```
 
 ---
@@ -112,12 +146,11 @@ k apply -f my-service.yaml
 - Create a namespace called dev-team.
 - Deploy a Pod named app1 in the dev-team namespace using the image busybox that runs the command sleep 3600.
 
-#### Imperative --------------------------------
+#### *Imperative*
 
-**Create ConfigMap**
-
-```
-   k create configmap app-config --from-literal=DB_HOST=mysql
+```bash
+#apply
+k create configmap app-config --from-literal=DB_HOST=mysql
 #Verify
    k get configmap app-config
 #Create Secret
@@ -126,13 +159,12 @@ k apply -f my-service.yaml
    k get secret app-secret
 ```
 
-**Create Pod configered-app.yaml using dry-run:**
-
-```
+```yaml
+#Create Pod configered-app.yaml using dry-run:
 vim pod.yaml
 ```
 
-```
+```bash
 apiVersion: v1
 kind: Pod
 metadata:
@@ -159,15 +191,15 @@ spec:
 kubectl apply -f pod.yaml
 ```
 
-#### Declarative
+#### *Declarative*
 
-```
+```yaml
 vim app-config.yaml
 vim app-secret.yaml
 vim configured-app.yaml
 ```
 
-```
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -176,7 +208,7 @@ data:
   DB_HOST: mysql
 ```
 
-```
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -186,7 +218,7 @@ stringData:
   DB_PASSWORD: Secure
 ```
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -209,15 +241,14 @@ spec:
         secretName: app-secret
 ```
 
-```
+```bash
 k apply -f app-config.yaml
 k apply -f app-secret.yaml
 k apply -f configured-app.yaml
 ```
 
-verify:
-
-```
+```bash
+#verify:
 k exec -it configured-app -- /bin/bash
 cat /etc/config/DB_HOST 
 cat /etc/secret/DB_PASSWORD

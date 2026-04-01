@@ -348,7 +348,7 @@ const Etudiant = require('./models/Etudiant');
 
 router.get('/etudiants', async (req, res) => {
   try {
-    const clients = await Etudiant.find();
+    const etudiants= await Etudiant.find();
     res.status(200).json(etudiants);
   } catch (error) {
     res.status(500).json({ message: error.message });

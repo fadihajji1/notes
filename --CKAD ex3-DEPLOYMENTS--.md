@@ -56,8 +56,6 @@ kubectl get deployment nginx-deployment -o yaml
 
 ```
 
- 
-
 ---
 
 #### **SUMMARY**:

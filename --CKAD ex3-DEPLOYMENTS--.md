@@ -17,7 +17,7 @@ k create deployment web-deploy \
 kubectl scale deployment nginx-deployment --replicas=2
 ```
 
-- **rollout** : used for updating 
+- **rollout** : used for updating
 
 ```bash
 #Use kubectl rollout to check deployment history
@@ -38,10 +38,10 @@ kubectl rollout history deployment/nginx-deployment
 - In Kubernetes, **Recreate** is an update strategy.
 - You need to change the deployment strategy from **RollingUpdate** to **Recreate**.
 
-```
+```bash
 kubectl edit deployment nginx-deployment
-# in yml file, replace entire strategy section with:
-# modify
+# in yaml file, replace entire strategy section:
+# from
 strategy:
   type: RollingUpdate
 # to:
@@ -50,9 +50,26 @@ strategy:
 
 ```
 
+```bash
+# check yaml file
+kubectl get deployment nginx-deployment -o yaml
+
+```
+
  
 
 ---
+
+#### **SUMMARY**:
+
+```
+k create deployment nginx-deployment --image=nginx
+k scale deployment nginx-deployment --replicas=2
+k scale deployment nginx-deployment --replicas=4
+k rollout history deployment/nginx-deployment
+k set image deployment/nginx-deployment nginx=nginx:latest
+k edit deployment nginx-deployment
+```
 
 ---
 

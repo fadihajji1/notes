@@ -10,11 +10,17 @@ k create deployment web-deploy \
  --labels="app=httpd,tier=backend,env=production"
 ```
 
-**additional functionalities on deployement:**
+**edit deployment**
 
 ```bash
+# edit full spec
+kubectl edit deployment <dep-name>
+# change image
+kubectl set image deployment/<dep-name> <container-name>=nginx:1.25
 # Scale a deployment
 kubectl scale deployment nginx-deployment --replicas=2
+# change replicas
+kubectl patch deployment <dep-name> -p '{"spec":{"replicas":3}}'
 ```
 
 - **rollout** : used for updating

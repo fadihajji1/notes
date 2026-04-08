@@ -41,6 +41,19 @@ k run my-pod \
   --env="MODE=production" \
 ```
 
+#### edit pod in multiple methods
+
+```bash
+### edit multiple fields
+kubectl edit pod <pod-name>
+### add label 
+kubectl patch pod <pod-name> -p '{"metadata":{"labels":{"env":"prod"}}}'
+### For real changes (image, ports…), delete and recreate the pod
+kubectl delete pod <pod-name>
+```
+
+#### expose cluster
+
 ```bash
 # create and expose service with a ClusterIP of my-pod
 k expose pod my-pod 
@@ -50,6 +63,10 @@ k expose pod my-pod
   --type=ClusterIP 
   -n test-namespace
 ```
+
+---
+
+---
 
 #### ***DECLARATIVE:***
 

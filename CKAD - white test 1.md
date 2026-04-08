@@ -6,8 +6,6 @@ white test 1
 
 ## **Section 1: Multi-Container Pods (Init Containers)**
 
-### **Exercice 1: Pod avec Init Container**
-
 - Créez un pod nommé multi-container-pod avec:
 - Un init container init-wait qui dort pendant 10 secondes avant de terminer.
 - Un conteneur principal app-container basé sur l'image nginx.
@@ -52,8 +50,6 @@ kubectl get pod multi-container-pod -w
 
 ## **Section 2: Readiness Probe et Liveness Probe**
 
-### **Exercice 2: Probes**
-
 - Créez un pod nommé probe-pod avec:
 - Un conteneur web-server basé sur nginx.
 - Une Readiness Probe qui vérifie /index.html via HTTP.
@@ -68,10 +64,10 @@ kubectl get pod multi-container-pod -w
 #### ***Déclaratif***
 
 - **create pod**
-- **vim** probe-pod.yaml
 
 ```
-
+vim probe-pod.yaml
+----------------------
 apiVersion: v1
 kind: Pod
 metadata:
@@ -98,7 +94,7 @@ spec:
 
 ```
 # apply
-kubectl apply -f pod.yaml
+kubectl apply -f prob-pod.yaml
 # verify
 kubectl describe pod probe-pod
 kubectl get pod probe-pod -w
@@ -107,8 +103,6 @@ kubectl get pod probe-pod -w
 ---
 
 ## **Section 3: Container Logging**
-
-### **Exercice 3: Logs des Conteneurs**
 
 - Déployez un pod logging-pod avec un conteneur basé sur busybox, qui génère un message toutes les 5 secondes.
 
@@ -150,8 +144,6 @@ kubectl logs -f logging-pod > logs.txt
 ---
 
 ## **Section 4: Labels et Sélecteurs**
-
-### **Exercice 5: Sélectionner des Pods**
 
 - Créez trois pods avec les labels app=web, app=api, et app=db.
 - Sélectionnez uniquement les pods web avec kubectl get pods -l app=web.
@@ -243,7 +235,7 @@ kubectl get pods -l app!=db
 > - Définir la stratégie Recreate.
 > - Observer l'impact du déploiement.
 
-Impératif :
+#### *Impératif :*
 
 ```bash
 # create deployment
@@ -288,7 +280,6 @@ kubectl apply -f deploy.yaml
 ```bash
 # Mise à jour vers 1.20 :
 kubectl set image deployment/web-recreate nginx=nginx:1.20
-
 # observe
 kubectl get pods -w
 ```
@@ -360,17 +351,9 @@ kubectl get pods -w
 
 ***Impératif :***
 
-```
+```bash
+# create a deployment
 kubectl create deployment web-rollback --image=nginx:1.17 --replicas=2
-```
-
-```
-kubectl set image deployment/web-rollback nginx=nginx:1.19
-kubectl set image deployment/web-rollback nginx=nginx:1.22
-```
-
-```
-kubectl rollout undo deployment/web-rollback
 ```
 
 ***Déclaratif :***
@@ -397,8 +380,11 @@ spec:
         image: nginx:1.17
 ```
 
-```
+```bash
 kubectl apply -f deploy.yaml
+```
+
+```bash
 # Mises à jour :
 kubectl set image deployment/web-rollback nginx=nginx:1.19
 kubectl set image deployment/web-rollback nginx=nginx:1.22
@@ -406,12 +392,14 @@ kubectl set image deployment/web-rollback nginx=nginx:1.22
 # Historique :
 kubectl rollout history deployment/web-rollback
 
-# Rollback vers révision précédente (1.19) :
+# Rollback vers révision précédente (1.19)
 kubectl rollout undo deployment/web-rollback
 
 # verify status & pod
 kubectl rollout status deployment/web-rollback
 kubectl get pods -o wide
 ```
+
+---
 
  

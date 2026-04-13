@@ -4,10 +4,11 @@
 
   Configure your Git identity locally to use it only for this project:
 
-```
-`git config --local user.name "fadi hajji"`
+(mostly useful when **GitHub account in vocode** is **different** than the **one need to push to**) 
 
-`git config --local user.email "fedihajji1@gmail.com"`
+```
+git config --local user.name "fadi hajji"
+git config --local user.email "fedihajji1@gmail.com"
 ```
 
 ---
@@ -41,9 +42,17 @@ git push -u origin main
 
 ---
 
+#### **change origin:**
+
+```
+git remote set-url origin <new-repo-url>
+```
+
 ---
 
-### **pull changes:**
+---
+
+### **Pull Requests:**
 
 1. **If you don’t have the repo yet (first time)**
 
@@ -95,19 +104,17 @@ incoming code from origin/master
 #push NEW changes
    git push origin master
 #or
-   git push -f origin maste
+   git push -f origin master
 ```
 
----
-
-# or
+#### **######## OR ########**
 
 1. **in bash command:**
 
 - `--ours` → keeps **your local changes**
 - `--theirs` → keeps **remote repository changes**
 
-####       ****Keep local version for a specific file**
+#### ****Keep local version for a specific file**
 
 ```
 #keep local version for specific file     
@@ -119,7 +126,7 @@ incoming code from origin/master
      git commit -m "Keep local changes"
 ```
 
-####       ****Keep remote version instead (for comparison)**
+#### ****Keep remote version instead (for comparison)**
 
 ```
 #keep Remote version for specific file

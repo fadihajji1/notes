@@ -1,0 +1,22 @@
+{
+  "theme": {
+    "mode": "light",
+    "customLightColors": null,
+    "customDarkColors": null
+  },
+  "editorFont": null,
+  "gitEnabled": true,
+  "pinnedNoteIds": [
+    "projects"
+  ],
+  "textDirection": null,
+  "editorWidth": "custom",
+  "defaultNoteName": "Untitled",
+  "interfaceZoom": 1.0,
+  "customEditorWidthPx": 768,
+  "ollamaModel": null,
+  "foldersEnabled": true,
+  "ignoredPatterns": null,
+  "customColorsLight": null,
+  "customColorsDark": null
+}

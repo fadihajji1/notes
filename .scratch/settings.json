@@ -7,13 +7,14 @@
   "editorFont": null,
   "gitEnabled": true,
   "pinnedNoteIds": [
-    "projects"
+    "projects",
+    "scratch setup (first time)"
   ],
   "textDirection": null,
   "editorWidth": "custom",
   "defaultNoteName": "Untitled",
   "interfaceZoom": 1.0,
-  "customEditorWidthPx": 768,
+  "customEditorWidthPx": 1200,
   "ollamaModel": null,
   "foldersEnabled": true,
   "ignoredPatterns": null,

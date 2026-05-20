@@ -7,7 +7,7 @@
 (mostly useful when **GitHub account in vocode** is **different** than the **one need to push to**) 
 
 ```
-git config --local user.name "fadi hajji"
+git config --local user.name "fadihajji1"
 git config --local user.email "fedihajji1@gmail.com"
 ```
 

@@ -36,7 +36,8 @@ git push origin add-mic-switcher2
 4. Submit the Pull Request:
 
 - Go to [https://github.com/ramensoftware/windhawk-mods](https://github.com/ramensoftware/windhawk-mods) (the original repo)  
-- Click "New Pull Request"  
+- Click "New Pull Request" 
+- IMPORTANT: click on **"compare across forks"** link
 - Select your fork as the source branch (add-mic-switcher2)  
 - Fill in the PR title: "Add Mic Switcher mod"  
 - Verify it shows only mods/mic-switcher2.wh.cpp as the changed file  
